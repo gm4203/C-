@@ -9,7 +9,7 @@
 #include <conio.h>
 using namespace std;
 
-enum AI_MODE{
+enum AI_MODE {
     AM_EASY = 1,
     AM_HARD
 };
@@ -79,7 +79,7 @@ int main() {
 
         cout << "============== AI ===============" << endl;
 
-        switch(iAIMode){
+        switch (iAIMode) {
         case AM_EASY:
             cout << "AIMode : Easy" << endl;
             break;
@@ -88,25 +88,25 @@ int main() {
             break;
         }
 
-        for(int i = 0; i < 5; ++i){
-            for(int j = 0; j < 5; ++j){
-                if(iAINumber[i * 5 + j] == INT_MAX){
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 5; ++j) {
+                if (iAINumber[i * 5 + j] == INT_MAX) {
                     cout << "*" << "\t";
                 }
-                else{
+                else {
                     cout << iAINumber[i * 5 + j] << "\t";
                 }
             }
             cout << endl;
         }
 
-        cout << "AIBingo Line : " << AIBingo << endl;
+        cout << "AIBingo Line : " << iAIBingo << endl;
         if (iBingo >= 5) {
             cout << "Player 승리" << endl;
             break;
         }
 
-        else if(AIBingo >= 5){
+        else if (iAIBingo >= 5) {
             cout << "AI 승리" << endl;
             break;
         }
@@ -136,8 +136,8 @@ int main() {
             continue;
         }
 
-        for(int i = 0; i < 25; ++i){
-            if(iAINumber[i] == iInput){
+        for (int i = 0; i < 25; ++i) {
+            if (iAINumber[i] == iInput) {
                 iAINumber[i] == INT_MAX;
                 --iNoneSelectCount;
                 break;
@@ -146,8 +146,8 @@ int main() {
 
         switch (iAIMode) {
         case AM_EASY:
-            for(int i = 0; i < 25; ++i){
-                if(iAINumber[i] != INT_MAX){
+            for (int i = 0; i < 25; ++i) {
+                if (iAINumber[i] != INT_MAX) {
                     iNoneSelect[iNoneSelectCount] = iAINumber[i];
                     ++iNoneSelectCount;
                 }
@@ -158,21 +158,22 @@ int main() {
             break;
         }
 
-        for(int i = 0; i < 25; ++i){
-            if(iNumber[i] == iInput){
+        for (int i = 0; i < 25; ++i) {
+            if (iNumber[i] == iInput) {
                 iNumber[i] = INT_MAX;
                 break;
             }
         }
 
-        for(int i = 0; i < 25; ++i){
-            if(iAINumber[i] == iInput){
+        for (int i = 0; i < 25; ++i) {
+            if (iAINumber[i] == iInput) {
                 iAINumber[i] = INT_MAX;
                 break;
             }
         }
 
         iBingo = 0;
+        iAIBingo = 0;
 
         int iCheck1 = 0, iCheck2 = 0;
         int iAicheck1 = 0, iAicheck2 = 0;
@@ -187,9 +188,9 @@ int main() {
                 if (iNumber[j * 5 + i] == INT_MAX) {
                     ++iCheck2;
                 }
-                if(iAINumber[i * 5 + j] == INT_MAX)
+                if (iAINumber[i * 5 + j] == INT_MAX)
                     ++iAicheck1;
-                if(iAINumber[j * 5 + i] == INT_MAX)
+                if (iAINumber[j * 5 + i] == INT_MAX)
                     ++iAicheck2;
             }
             if (iCheck1 == 5) {
@@ -198,26 +199,26 @@ int main() {
             if (iCheck2 == 5) {
                 ++iBingo;
             }
-            if(iAicheck1 == 5)
+            if (iAicheck1 == 5)
                 ++iAIBingo;
-            if(iAicheck2 == 5)
+            if (iAicheck2 == 5)
                 ++iAIBingo;
         }
 
         iCheck1 = 0;
         iAicheck1 = 0;
-        for (int i = 0; i < 25; i+=6) {
+        for (int i = 0; i < 25; i += 6) {
             if (iNumber[i] == INT_MAX) {
                 ++iCheck1;
             }
-            if(iAINumber[i] == INT_MAX){
+            if (iAINumber[i] == INT_MAX) {
                 ++iAicheck1;
             }
         }
         if (iCheck1 == 5) {
             iBingo++;
         }
-        if(iAicheck1 == 5)
+        if (iAicheck1 == 5)
             ++iAIBingo;
 
         iCheck1 = 0;
