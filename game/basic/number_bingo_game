@@ -1,1 +1,120 @@
+// 숫자 빙고 게임
+// 1 ~ 25 숫자 이 숫자를 골고루 섞어서 5 * 5로 출력 
+// 플레이어는 숫자를 입력받고 0을 입력하면 게임 종료
+// 숫자를 입력받았으면 숫자 목록중 입력 받은 숫자를 찾아서 * 로 만들어준다.
+// 숫자를 *로 만든후에 빙고 줄을 체크한다. 빙고 줄이 5줄 이상일 경우 게임을 종료한다 .
+
+#include <iostream>
+#include <time.h>
+#include <conio.h>
+using namespace std;
+
+int main() {
+    srand((unsigned)time(0));
+
+    int iNumber[25] = {};
+
+    for (int i = 0; i < 24; ++i) {
+        iNumber[i] = i + 1;
+    }
+
+    int iTemp, idx1, idx2;
+    for (int i = 0; i < 100; ++i) {
+        idx1 = rand() % 25;
+        idx2 = rand() % 25;
+
+        iTemp = iNumber[idx1];
+        iNumber[idx1] = iNumber[idx2];
+        iNumber[idx2] = iTemp;
+    }
+
+    int iBingo = 0;
+
+    while (true) {
+        system("cls");
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 5; ++j) {
+                if (iNumber[i * 5 + j] == INT_MAX) {
+                    cout << "*" << "\t";
+                }
+                else {
+                    cout << iNumber[i * 5 + j] << "\t";
+                }
+            }
+            cout << "\n";
+        }
+        cout << "Bingo Line : " << iBingo << endl;
+
+        if (iBingo >= 5) {
+            break;
+        }
+
+        cout << "플레이어 입력 : ";
+        int iInput;
+        bool bAcc = true;
+        cin >> iInput;
+
+        if (iInput == 0) {
+            cout << "게임 종료";
+            break;
+        }
+        else if (iInput < 0 || iInput > 25) {
+            continue;
+        }
+        else {
+            for (int i = 0; i < 25; ++i) {
+                if (iInput == iNumber[i]) {
+                    bAcc = false;
+                    iNumber[i] = INT_MAX;
+                    break;
+                }
+            }
+        }
+        if (bAcc) {
+            continue;
+        }
+        iBingo = 0;
+
+        int iCheck1 = 0, iCheck2 = 0;
+        for (int i = 0; i < 5; ++i) {
+            iCheck1 = iCheck2 = 0;
+            for (int j = 0; j < 5; ++j) {
+                if (iNumber[i * 5 + j] == INT_MAX) {
+                    ++iCheck1;
+                }
+
+                if (iNumber[j * 5 + i] == INT_MAX) {
+                    ++iCheck2;
+                }
+            }
+            if (iCheck1 == 5) {
+                ++iBingo;
+            }
+            if (iCheck2 == 5) {
+                ++iBingo;
+            }
+        }
+
+        iCheck1 = 0;
+        for (int i = 0; i < 25; i+=6) {
+            if (iNumber[i] == INT_MAX) {
+                ++iCheck1;
+            }
+        }
+        if (iCheck1 == 5) {
+            iBingo++;
+        }
+
+        iCheck1 = 0;
+        for (int i = 4; i <= 20; i += 4) {
+            if (iNumber[i] == INT_MAX) {
+                ++iCheck1;
+            }
+        }
+        if (iCheck1 == 5) {
+            ++iBingo;
+        }
+
+    }
+}
 
