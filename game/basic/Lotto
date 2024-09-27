@@ -1,1 +1,13 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+  int iLotto[45] = {};
+
+  for(int i = 0; i < 45; ++i){
+    iLotto[i] = i + 1;
+  }
+  
+
+
 
