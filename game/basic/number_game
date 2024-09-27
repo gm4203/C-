@@ -1,1 +1,109 @@
+#include <iostream>
+#include <time.h>
+// console input output header file. 콘솔창에서 입출력 담당
+#include <conio.h>
+using namespace std;
 
+int main() {
+    srand((unsigned)time(0));
+
+    int iNumber[25] = {};
+
+    for (int i = 0; i < 24; ++i) {
+        iNumber[i] = i + 1;
+    }
+
+    // 가장 마지막 칸은 공백으로 비워둔다. 공백이 의미하는 값은 특수한 값을 사용할건데
+    // INT_MAX라는 값을 사용할 것이다. INT_MAX는 이미 정의 되어 있는 값으로 int로 표현
+    // 할 수 있는 최대값
+
+    iNumber[24] = INT_MAX;
+
+    // 별이 있는 위치 지정
+    int iStarIndex = 24;
+
+    int iTemp, idx1, idx2;
+    for (int i = 0; i < 100; ++i) {
+        idx1 = rand() % 24;
+        idx2 = rand() % 24;
+
+        iTemp = iNumber[idx1];
+        iNumber[idx1] = iNumber[idx2];
+        iNumber[idx2] = iTemp;
+    }
+
+    while (true) {
+        system("cls");
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 5; ++j) {
+                // i가 0일 때는 j는 0~4까지 반복한다. 이경우 0 * 5 + (0~4)를 더하게되서
+                // 인덱스는 0, 1, 2, 3, 4 가 나오게 된다. 
+                // i가 1일 때는 j는 0~4까지 반복한다.
+                if (iNumber[i * 5 + j] == INT_MAX) {
+                    cout << "*\t";
+                }
+                else {
+                    cout << iNumber[i * 5 + j] << "\t";
+                }
+            }
+            cout << "\n";
+        }
+        cout << "w : 위 s : 아래 a : 왼쪽 d : 오른쪽 q : 종료 :";
+        // _getch() : 문자 1개를 입력받는 함수이다. 이 함수는 Enter를 치지 않더라도 
+        // 문자를 누르는 순간 바로 그 문자를 반환하고 종료한다. 
+        char cInput = _getch();
+
+        if (cInput == 'q' || cInput == 'Q') {
+            break;
+        }
+        switch (cInput) {
+        case 'w':
+        case 'W':
+            if (iStarIndex > 4) {
+                iNumber[iStarIndex] = iNumber[iStarIndex - 5];
+                iNumber[iStarIndex - 5] = INT_MAX;
+                iStarIndex -= 5;
+            }            
+            break;
+        case 's':
+        case 'S':
+            if(iStarIndex < 20){
+                iNumber[iStarIndex] = iNumber[iStarIndex + 5];
+                iNumber[iStarIndex + 5] = INT_MAX;
+                iStarIndex += 5;
+            }
+            break;
+        case 'a':
+        case 'A':
+            if (iStarIndex % 5 != 0) {
+                iNumber[iStarIndex] = iNumber[iStarIndex - 1];
+                iNumber[iStarIndex - 1] = INT_MAX;
+                iStarIndex--;
+            }
+            break;
+        case 'd':
+        case 'D':
+            if (iStarIndex % 5 != 4) {
+                iNumber[iStarIndex] = iNumber[iStarIndex + 1];
+                iNumber[iStarIndex + 1] = INT_MAX;
+                iStarIndex++;
+            }
+            break;
+        }
+    }
+    
+    bool bWin = true;
+
+    for (int i = 0; i < 24; ++i) {
+        if (iNumber[i] != i + 1) {
+            bWin = false;
+            break;
+        }
+    }
+
+    if (bWin == true) {
+        cout << "숫자를 모두 맞추었습니다" << endl;
+    }
+
+    cout << "게임을 종료합니다" << endl;
+}
